@@ -90,7 +90,7 @@ export default function NewFriends() {
       />
       <div className="page-scroll">
         <Link to="/contacts/add" className="add-entry">
-          <UserPlus size={20} /> 搜索微聊号 / 昵称 添加朋友
+          <UserPlus size={20} /> 搜索泡泡号 / 昵称 添加朋友
         </Link>
         {requests.length === 0 ? (
           <Empty title="暂时没有新的朋友">

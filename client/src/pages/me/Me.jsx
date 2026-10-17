@@ -23,7 +23,7 @@ function MeHome() {
           <Avatar src={me.avatar} name={me.nickname} seed={me.id} size={isMobile ? 64 : 56} radius={8} />
           <span className="me-info">
             <span className="me-name">{me.nickname}</span>
-            <span className="me-id">微聊号：{me.username}</span>
+            <span className="me-id">泡泡号：{me.username}</span>
             {me.signature && <span className="me-sign">{me.signature}</span>}
           </span>
           <ChevronRight size={18} className="cell-arrow" />

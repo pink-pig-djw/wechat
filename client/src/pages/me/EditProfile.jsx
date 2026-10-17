@@ -67,7 +67,7 @@ export default function EditProfile() {
             </span>
           </Cell>
           <Cell label="名字" value={me.nickname} onClick={() => edit('nickname', '更改名字', { maxLength: 20 })} />
-          <Cell label="微聊号" value={me.username} arrow={false} />
+          <Cell label="泡泡号" value={me.username} arrow={false} />
         </CellGroup>
         <CellGroup>
           <Cell label="性别" value={genderLabel(me.gender) || '未设置'} onClick={chooseGender} />

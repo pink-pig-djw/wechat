@@ -1,0 +1,25 @@
+{
+  "appId": "app.paopao.chat",
+  "appName": "泡泡",
+  "webDir": "dist",
+  "server": {
+    "url": "https://weiliao-production.up.railway.app",
+    "errorPath": "offline.html"
+  },
+  "android": {
+    "backgroundColor": "#ededed"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "launchAutoHide": true,
+      "launchFadeOutDuration": 250,
+      "backgroundColor": "#eafbf3",
+      "showSpinner": false
+    },
+    "SystemBars": {
+      "insetsHandling": "css",
+      "initialViewportFitValueHint": "cover"
+    }
+  }
+}

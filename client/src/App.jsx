@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useStore } from './lib/store.js';
 import { onUnauthorized } from './lib/api.js';
 import { logout } from './lib/actions.js';
 import { toast } from './lib/ui.js';
+import { initNative } from './lib/native.js';
 import { useIsMobile } from './lib/hooks.js';
 import { AppShell } from './components/AppShell.jsx';
 import { DialogHost, ImageViewerHost, MenuHost, ToastHost } from './components/Overlays.jsx';
@@ -25,6 +26,13 @@ import Settings from './pages/me/Settings.jsx';
 export default function App() {
   const token = useStore((s) => s.token);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Android app: back button + splash screen. Registered once; the handler reads the route itself.
+    initNative(navigate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     onUnauthorized(() => {

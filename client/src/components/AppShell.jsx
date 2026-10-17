@@ -34,6 +34,7 @@ export function AppShell() {
 
   useEffect(() => setNavigator(navigate), [navigate]);
 
+
   useEffect(() => {
     connectSocket(token);
     refreshMe().catch(() => {});
@@ -41,7 +42,7 @@ export function AppShell() {
   }, [token]);
 
   useEffect(() => {
-    document.title = unread.total ? `(${unread.total}) 微聊` : '微聊';
+    document.title = unread.total ? `(${unread.total}) 泡泡` : '泡泡';
   }, [unread.total]);
 
   const showTabBar = isMobile && TAB_ROOTS.includes(location.pathname);
@@ -123,7 +124,7 @@ function TabBar() {
   );
   return (
     <nav className="tabbar" aria-label="主导航">
-      {tab('/chats', MessageCircle, '微聊', <Badge count={unread.total} dot={!unread.total && unread.mutedDot} />)}
+      {tab('/chats', MessageCircle, '泡泡', <Badge count={unread.total} dot={!unread.total && unread.mutedDot} />)}
       {tab('/contacts', Users, '通讯录', <Badge count={pendingRequests} />)}
       {tab('/discover', Compass, '发现', <Badge count={momentStatus.unread} dot={!momentStatus.unread && !!momentStatus.latest} />)}
       {tab('/me', User, '我')}

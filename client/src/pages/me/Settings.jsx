@@ -120,7 +120,7 @@ export default function Settings() {
             }}
           />
         </CellGroup>
-        <p className="about">微聊 v1.0 · 连接你在乎的每一个人</p>
+        <p className="about">泡泡 v1.0 · 连接你在乎的每一个人</p>
       </div>
       {changing && <ChangePasswordModal onClose={() => setChanging(false)} />}
     </div>

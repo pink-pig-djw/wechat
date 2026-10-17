@@ -81,7 +81,7 @@ function ChatList() {
   return (
     <div className="list-pane">
       {isMobile ? (
-        <PageHeader title={total ? `微聊(${total})` : '微聊'} actions={plusButton} />
+        <PageHeader title={total ? `泡泡(${total})` : '泡泡'} actions={plusButton} />
       ) : (
         <div className="list-toolbar">
           <SearchBar value={q} onChange={setQ} />

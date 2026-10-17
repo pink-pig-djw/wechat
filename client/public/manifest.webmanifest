@@ -1,6 +1,6 @@
 {
-  "name": "微聊",
-  "short_name": "微聊",
+  "name": "泡泡",
+  "short_name": "泡泡",
   "description": "连接你在乎的每一个人：聊天、群聊、朋友圈",
   "lang": "zh-CN",
   "start_url": "/chats",

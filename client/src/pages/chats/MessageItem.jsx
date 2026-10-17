@@ -5,6 +5,7 @@ import { Spinner } from '../../components/ui.jsx';
 import { formatFileSize, systemText } from '../../lib/format.js';
 import { useContextAction } from '../../lib/hooks.js';
 import { openViewer } from '../../lib/ui.js';
+import { isNative, openExternal } from '../../lib/native.js';
 import { EmojiText } from '../../emoji/EmojiText.jsx';
 import { STICKER_MAP, isEmojiOnly } from '../../emoji/index.js';
 
@@ -78,7 +79,17 @@ function Bubble({ message, contextProps, onOpenCard }) {
       </>
     );
     return content.url && !message.status ? (
-      <a className="bubble bubble-file" href={content.url} download={content.name} {...contextProps}>
+      <a
+        className="bubble bubble-file"
+        href={content.url}
+        download={content.name}
+        onClick={(e) => {
+          if (!isNative) return;
+          e.preventDefault();
+          openExternal(content.url);
+        }}
+        {...contextProps}
+      >
         {inner}
       </a>
     ) : (

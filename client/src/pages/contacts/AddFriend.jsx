@@ -45,8 +45,8 @@ export default function AddFriend() {
 
   const copyMine = () =>
     navigator.clipboard?.writeText(me.username).then(
-      () => toast('微聊号已复制'),
-      () => toast(`我的微聊号：${me.username}`),
+      () => toast('泡泡号已复制'),
+      () => toast(`我的泡泡号：${me.username}`),
     );
 
   return (
@@ -54,16 +54,16 @@ export default function AddFriend() {
       <PageHeader title="添加朋友" back="/contacts" />
       <div className="page-scroll">
         <div className="add-search">
-          <SearchBar value={q} onChange={setQ} placeholder="微聊号 / 昵称 / 群号" autoFocus />
+          <SearchBar value={q} onChange={setQ} placeholder="泡泡号 / 昵称 / 群号" autoFocus />
         </div>
         {!q.trim() && (
           <>
             <button type="button" className="my-id" onClick={copyMine}>
-              我的微聊号：<b>{me.username}</b>
+              我的泡泡号：<b>{me.username}</b>
               <Copy size={14} />
             </button>
             <Empty icon={<Search size={44} strokeWidth={1.2} />} title="搜索朋友或群聊">
-              <p>输入对方的微聊号或昵称查找朋友，输入群号可以加入公开群聊</p>
+              <p>输入对方的泡泡号或昵称查找朋友，输入群号可以加入公开群聊</p>
             </Empty>
           </>
         )}
@@ -83,7 +83,7 @@ export default function AddFriend() {
                     <Avatar src={u.avatar} name={u.nickname} seed={u.id} size={44} />
                     <span className="row-text">
                       <span className="row-title">{u.remark || u.nickname}</span>
-                      <span className="row-sub">微聊号：{u.username}</span>
+                      <span className="row-sub">泡泡号：{u.username}</span>
                     </span>
                     <span className="request-status">{u.relation === 'self' ? '我' : u.relation === 'friend' ? '已添加' : ''}</span>
                   </button>

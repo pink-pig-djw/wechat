@@ -210,7 +210,7 @@ function ProfileHead({ profile, size = 64 }) {
           {profile.starred && <Star className="star-mark" size={14} fill="currentColor" aria-label="星标朋友" />}
         </h2>
         {profile.remark && <p>昵称：{profile.nickname}</p>}
-        <p>微聊号：{profile.username}</p>
+        <p>泡泡号：{profile.username}</p>
         {profile.region && <p>地区：{profile.region}</p>}
       </div>
     </div>

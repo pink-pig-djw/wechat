@@ -1,5 +1,5 @@
 /**
- * 「泡泡」表情 —— 微聊自己的表情形象。
+ * 「泡泡」表情 —— 泡泡自己的表情形象。
  *
  * Every face is a little chat bubble (round body + a speech-bubble tail at the bottom-left,
  * echoing the app logo) with a glossy highlight, rosy cheeks and a soft brown outline.

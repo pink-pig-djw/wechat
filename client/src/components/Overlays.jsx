@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Download, X } from 'lucide-react';
 import { closeMenu, closeViewer, useUi } from '../lib/ui.js';
 import { isTouch } from '../lib/hooks.js';
 import { Modal } from './Modal.jsx';
+import { isNative, openExternal } from '../lib/native.js';
 
 const supportsPopover = typeof HTMLElement !== 'undefined' && 'popover' in HTMLElement.prototype;
 
@@ -247,7 +248,19 @@ function ImageViewer({ viewer }) {
       </div>
       <div className="viewer-toolbar">
         {images.length > 1 && <span className="viewer-count">{index + 1} / {images.length}</span>}
-        <a className="icon-btn" href={images[index]} download aria-label="下载图片" onClick={(e) => e.stopPropagation()}>
+        <a
+          className="icon-btn"
+          href={images[index]}
+          download
+          aria-label="下载图片"
+          onClick={(e) => {
+            e.stopPropagation();
+            if (isNative) {
+              e.preventDefault();
+              openExternal(images[index]);
+            }
+          }}
+        >
           <Download size={20} />
         </a>
         <button type="button" className="icon-btn" aria-label="关闭" onClick={() => ref.current.close()}>

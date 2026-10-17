@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <title>泡泡</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: light-dark(#eafbf3, #10261c);
+        --text: light-dark(#1d3b2e, #e6f5ee);
+        --sub: light-dark(#5a8a74, #8fb8a5);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, 'PingFang SC', 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif;
+        text-align: center;
+      }
+      img {
+        width: 96px;
+        height: 96px;
+        border-radius: 22px;
+        box-shadow: 0 10px 30px rgb(15 185 117 / 30%);
+        animation: float 2.4s ease-in-out infinite;
+      }
+      @keyframes float {
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+      h1 {
+        margin: 22px 0 8px;
+        font-size: 20px;
+      }
+      p {
+        margin: 0 0 26px;
+        color: var(--sub);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+      button {
+        border: 0;
+        border-radius: 10px;
+        padding: 12px 34px;
+        background: #07c160;
+        color: #fff;
+        font: inherit;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="icons/icon-192.png" alt="" />
+      <h1>网络好像走丢了</h1>
+      <p>暂时连不上泡泡服务器<br />检查一下网络后再试试吧</p>
+      <button type="button" id="retry">重新连接</button>
+    </main>
+    <script>
+      // Keep in sync with server.url in capacitor.config.json (CI rewrites both).
+      const SERVER_URL = 'https://weiliao-production.up.railway.app';
+      document.getElementById('retry').addEventListener('click', () => {
+        window.location.href = SERVER_URL;
+      });
+      window.addEventListener('online', () => {
+        window.location.href = SERVER_URL;
+      });
+    </script>
+  </body>
+</html>

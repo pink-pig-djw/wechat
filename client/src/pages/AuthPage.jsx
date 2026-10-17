@@ -38,20 +38,20 @@ export default function AuthPage({ mode }) {
       <div className="auth-card">
         <div className="auth-brand">
           <img className="auth-mascot" src={STICKER_MAP.get(isRegister ? 'yay' : 'hello').src} alt="" />
-          <h1>微聊</h1>
+          <h1>泡泡</h1>
           <p>{isRegister ? '注册一个新账号，和朋友们畅聊' : '连接你在乎的每一个人'}</p>
         </div>
 
         <form className="auth-form" onSubmit={submit} noValidate>
           <label className="field">
-            <span>微聊号</span>
+            <span>泡泡号</span>
             <input
               className="input"
               name="username"
               autoComplete="username"
               autoCapitalize="off"
               spellCheck="false"
-              placeholder={isRegister ? '字母开头，4-20 位字母/数字/下划线' : '请输入微聊号'}
+              placeholder={isRegister ? '字母开头，4-20 位字母/数字/下划线' : '请输入泡泡号'}
               value={form.username}
               onChange={update('username')}
               required

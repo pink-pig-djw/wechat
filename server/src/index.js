@@ -85,7 +85,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   // On a fresh deployment, SEED_DEMO=1 creates the demo accounts so there is something to try.
   if (process.env.SEED_DEMO === '1' && seed(server.db)) console.log('✅ 已创建演示数据（密码均为 123456）');
   const port = await server.listen();
-  console.log(`🚀 微聊已启动: http://localhost:${port}`);
+  console.log(`🚀 泡泡已启动: http://localhost:${port}`);
   if (!fs.existsSync(path.join(server.config.clientDist, 'index.html'))) {
     console.log('ℹ️  前端尚未构建：开发时请运行 `npm run dev`，或先执行 `npm run build`。');
   }
