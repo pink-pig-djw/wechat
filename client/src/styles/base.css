@@ -1,0 +1,194 @@
+/* ---------- design tokens (light / dark) ---------- */
+:root {
+  color-scheme: light dark;
+  &:has(> head > meta[name='color-scheme'][content='dark']) {
+    color-scheme: dark;
+  }
+  &:has(> head > meta[name='color-scheme'][content='light']) {
+    color-scheme: light;
+  }
+
+  --brand: #07c160;
+  --brand-strong: #06ad56;
+  --danger: #fa5151;
+  --warn: #fa9d3b;
+  --link: light-dark(#576b95, #7d90a9);
+  --bg: light-dark(#ededed, #111111);
+  --bg-elevated: light-dark(#ffffff, #1c1c1c);
+  --bg-list: light-dark(#f7f7f7, #191919);
+  --bg-chat: light-dark(#f5f5f5, #111111);
+  --bg-sidebar: light-dark(#2e2e2e, #141414);
+  --bg-hover: light-dark(rgb(0 0 0 / 4.5%), rgb(255 255 255 / 5%));
+  --bg-active: light-dark(rgb(0 0 0 / 8.5%), rgb(255 255 255 / 9%));
+  --bg-pinned: light-dark(#ececec, #212121);
+  --bg-input: light-dark(#ffffff, #262626);
+  --bg-search: light-dark(#e3e3e3, #262626);
+  --bg-soft: light-dark(#f2f2f2, #262626);
+  --text: light-dark(#191919, rgb(255 255 255 / 88%));
+  --text-2: light-dark(#6b6b6b, rgb(255 255 255 / 55%));
+  --text-3: light-dark(#a1a1a1, rgb(255 255 255 / 32%));
+  --border: light-dark(rgb(0 0 0 / 8%), rgb(255 255 255 / 8%));
+  --divider: light-dark(rgb(0 0 0 / 6%), rgb(255 255 255 / 6%));
+  --bubble-mine: light-dark(#95ec69, #3eb575);
+  --bubble-mine-text: light-dark(#111111, #0b0b0b);
+  --bubble-other: light-dark(#ffffff, #2b2b2b);
+  --shadow: light-dark(0 10px 32px rgb(0 0 0 / 12%), 0 10px 32px rgb(0 0 0 / 55%));
+  --scroll-thumb: light-dark(rgb(0 0 0 / 18%), rgb(255 255 255 / 18%));
+
+  --font: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Segoe UI', Roboto, sans-serif;
+  accent-color: var(--brand);
+  scrollbar-color: var(--scroll-thumb) transparent;
+  scrollbar-width: thin;
+}
+
+/* Fallback for browsers without light-dark(): follow the system scheme. */
+@supports not (color: light-dark(white, black)) {
+  :root {
+    --link: #576b95;
+    --bg: #ededed;
+    --bg-elevated: #ffffff;
+    --bg-list: #f7f7f7;
+    --bg-chat: #f5f5f5;
+    --bg-sidebar: #2e2e2e;
+    --bg-hover: rgb(0 0 0 / 4.5%);
+    --bg-active: rgb(0 0 0 / 8.5%);
+    --bg-pinned: #ececec;
+    --bg-input: #ffffff;
+    --bg-search: #e3e3e3;
+    --bg-soft: #f2f2f2;
+    --text: #191919;
+    --text-2: #6b6b6b;
+    --text-3: #a1a1a1;
+    --border: rgb(0 0 0 / 8%);
+    --divider: rgb(0 0 0 / 6%);
+    --bubble-mine: #95ec69;
+    --bubble-mine-text: #111111;
+    --bubble-other: #ffffff;
+    --shadow: 0 10px 32px rgb(0 0 0 / 12%);
+    --scroll-thumb: rgb(0 0 0 / 18%);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --link: #7d90a9;
+      --bg: #111111;
+      --bg-elevated: #1c1c1c;
+      --bg-list: #191919;
+      --bg-chat: #111111;
+      --bg-sidebar: #141414;
+      --bg-hover: rgb(255 255 255 / 5%);
+      --bg-active: rgb(255 255 255 / 9%);
+      --bg-pinned: #212121;
+      --bg-input: #262626;
+      --bg-search: #262626;
+      --bg-soft: #262626;
+      --text: rgb(255 255 255 / 88%);
+      --text-2: rgb(255 255 255 / 55%);
+      --text-3: rgb(255 255 255 / 32%);
+      --border: rgb(255 255 255 / 8%);
+      --divider: rgb(255 255 255 / 6%);
+      --bubble-mine: #3eb575;
+      --bubble-mine-text: #0b0b0b;
+      --bubble-other: #2b2b2b;
+      --shadow: 0 10px 32px rgb(0 0 0 / 55%);
+      --scroll-thumb: rgb(255 255 255 / 18%);
+    }
+  }
+}
+
+/* ---------- reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  font-weight: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgb(7 193 96 / 28%);
+}
+
+input[type='search']::-webkit-search-cancel-button {
+  display: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

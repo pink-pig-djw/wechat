@@ -1,0 +1,24 @@
+{
+  "name": "weiliao",
+  "version": "1.0.0",
+  "private": true,
+  "description": "一款类微信的即时通讯 Web 应用：好友、群聊、朋友圈、实时消息",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c green,cyan \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "start": "npm run start -w server",
+    "test": "npm test -w server",
+    "seed": "npm run seed -w server",
+    "lint": "npm run lint -w client"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
+}

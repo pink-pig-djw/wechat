@@ -1,0 +1,315 @@
+/* ---------- app frame ---------- */
+.app {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+/* On large screens the app sits in a window, like a desktop client. */
+@media (min-width: 1280px) and (min-height: 700px) {
+  body:has(.app.is-desktop) {
+    background:
+      radial-gradient(1200px 600px at 10% 0%, rgb(7 193 96 / 14%), transparent 60%),
+      radial-gradient(900px 500px at 100% 100%, rgb(91 143 249 / 12%), transparent 60%),
+      var(--bg);
+  }
+  .app.is-desktop {
+    max-width: 1240px;
+    height: calc(100dvh - 56px);
+    max-height: 920px;
+    margin: max(28px, calc((100dvh - 920px) / 2)) auto 0;
+    border-radius: 14px;
+    box-shadow: var(--shadow), 0 0 0 1px var(--border);
+  }
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  position: relative;
+}
+
+/* ---------- desktop sidebar ---------- */
+.sidebar {
+  width: 64px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 30px 0 14px;
+  background: var(--bg-sidebar);
+}
+
+.side-avatar {
+  margin-bottom: 18px;
+  border-radius: 6px;
+}
+
+.side-item {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: #9a9a9a;
+  transition: color 0.15s;
+}
+
+@media (hover: hover) {
+  .side-item:hover {
+    color: #dedede;
+  }
+}
+
+.side-item.active {
+  color: var(--brand);
+}
+
+.side-item .badge {
+  position: absolute;
+  top: 3px;
+  right: 1px;
+}
+
+.side-item .badge-dot {
+  top: 8px;
+  right: 8px;
+}
+
+.side-spacer {
+  flex: 1;
+}
+
+.side-logo {
+  color: #4d4d4d;
+  margin-bottom: 6px;
+}
+
+/* ---------- list / detail split ---------- */
+.split {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+}
+
+.split-list {
+  width: 280px;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--bg-list);
+  border-right: 1px solid var(--border);
+}
+
+.split-detail {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--bg-chat);
+}
+
+.detail-placeholder {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--text-3);
+}
+
+.logo-muted {
+  opacity: 0.18;
+}
+
+.list-pane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  position: relative;
+}
+
+.list-toolbar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 12px 12px;
+}
+
+.toolbar-plus .icon-btn {
+  width: 30px;
+  height: 30px;
+  background: var(--bg-search);
+  color: var(--text-2);
+}
+
+.list-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ---------- mobile ---------- */
+.is-mobile .split-list {
+  width: 100%;
+  border: 0;
+  background: var(--bg);
+}
+
+.is-mobile .split.has-detail > .split-list,
+.is-mobile .split:not(.has-detail) > .split-detail {
+  display: none;
+}
+
+.is-mobile .split-detail {
+  background: var(--bg);
+}
+
+.app.with-tabbar .app-main {
+  padding-bottom: calc(56px + env(safe-area-inset-bottom));
+}
+
+.tabbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  height: calc(56px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--bg-list);
+  border-top: 1px solid var(--border);
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 11px;
+  color: var(--text);
+}
+
+.tab.active {
+  color: var(--brand);
+}
+
+.tab-icon {
+  position: relative;
+  display: grid;
+}
+
+.tab-icon .badge {
+  position: absolute;
+  top: -5px;
+  left: 17px;
+}
+
+.tab-icon .badge-dot {
+  top: -2px;
+  left: 20px;
+}
+
+.offline-bar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  padding: 6px 16px;
+  border-radius: 0 0 10px 10px;
+  background: #fff4d6;
+  color: #8a6400;
+  font-size: 13px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+  animation: fade-up 0.2s;
+}
+
+/* Phones: follow the visual viewport (keyboard-aware, see main.jsx) and the notch. */
+.app.is-mobile {
+  position: fixed;
+  top: var(--app-top, 0);
+  left: 0;
+  height: var(--app-height, 100dvh);
+}
+
+.is-mobile .page-header {
+  height: calc(50px + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+}
+
+.overlay-page {
+  top: var(--app-top, 0);
+  bottom: auto;
+  height: var(--app-height, 100dvh);
+}
+
+.back-label {
+  margin-left: -4px;
+  font-size: 15px;
+}
+
+.back-label:empty {
+  display: none;
+}
+
+.is-mobile .back-btn {
+  width: auto;
+  min-width: 40px;
+  padding-right: 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 767px), (pointer: coarse) {
+  /* 16px+ keeps iOS from zooming the page when an input gets focus. */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+@media (pointer: coarse) {
+  /* Long-press opens our action sheet instead of the native text selection. */
+  .bubble,
+  .conv-item,
+  .request-row {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .icon-btn {
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+/* Touch feedback (hover effects above only apply to real pointers). */
+@media (hover: none) {
+  .conv-item:active,
+  .contact-row:active,
+  .row-item:active,
+  .request-row:active,
+  .picker-row:active,
+  button.cell:active,
+  label.cell:active,
+  .me-card:active {
+    background: var(--bg-active);
+  }
+  .icon-btn:active {
+    background: var(--bg-hover);
+  }
+}

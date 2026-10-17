@@ -1,0 +1,500 @@
+.moments-page {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  background: var(--bg);
+}
+
+.moments-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: calc(52px + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 10px 0;
+  color: #fff;
+  transition: background 0.2s, color 0.2s;
+}
+
+.moments-topbar h1 {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.moments-topbar .icon-btn {
+  color: inherit;
+}
+
+.moments-topbar:not(.solid) .icon-btn {
+  background: rgb(0 0 0 / 22%);
+}
+
+.moments-topbar.solid {
+  background: var(--bg-list);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.moments-topbar.solid h1 {
+  opacity: 1;
+}
+
+.moments-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.moments-column {
+  max-width: 680px;
+  min-height: 100%;
+  margin: 0 auto;
+  background: var(--bg-elevated);
+}
+
+.moments-cover {
+  position: relative;
+  height: 300px;
+  margin-bottom: 50px;
+  background: linear-gradient(135deg, #5ad8a6 0%, #3b8cff 55%, #9270ca 100%) center / cover;
+}
+
+.moments-cover.editable {
+  cursor: pointer;
+}
+
+.cover-hint {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  color: rgb(255 255 255 / 80%);
+}
+
+.cover-owner {
+  position: absolute;
+  right: 16px;
+  bottom: -30px;
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.cover-name {
+  margin-bottom: 40px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 45%);
+}
+
+.cover-owner .avatar {
+  box-shadow: 0 0 0 2px var(--bg-elevated);
+}
+
+.cover-signature {
+  margin-top: -10px;
+  padding: 0 20px 8px 40%;
+  text-align: right;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.notif-pill {
+  display: block;
+  margin: 8px auto 4px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  background: #4c4c4c;
+  font-size: 13px;
+  color: #fff;
+}
+
+.notif-link {
+  display: block;
+  margin-left: auto;
+  padding: 4px 20px;
+  font-size: 12px;
+  color: var(--link);
+}
+
+.moment {
+  display: flex;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.moment-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.moment-author {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--link);
+  text-align: left;
+}
+
+.moment-text {
+  margin-bottom: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.moment-single {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.moment-single img {
+  max-width: min(240px, 72%);
+  max-height: 260px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+.moment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  max-width: 300px;
+  margin-bottom: 8px;
+}
+
+.moment-grid.grid-4 {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 200px;
+}
+
+.moment-grid button {
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.moment-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.moment-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 30px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.moment-meta .link-btn {
+  margin: 0;
+  font-size: 12px;
+}
+
+.moment-actions-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.moment-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 34px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--bg-soft);
+}
+
+.moment-more span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--link);
+}
+
+.moment-actions {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 8px);
+  display: flex;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #4c4c4c;
+  transform: translateY(-50%);
+  animation: actions-in 0.15s ease-out;
+}
+
+@keyframes actions-in {
+  from {
+    opacity: 0;
+    transform: translate(10px, -50%);
+  }
+}
+
+.moment-actions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  font-size: 13px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.moment-actions button + button {
+  border-left: 1px solid rgb(255 255 255 / 12%);
+}
+
+.moment-feedback {
+  position: relative;
+  margin-top: 8px;
+  border-radius: 4px;
+  background: var(--bg-soft);
+  font-size: 13px;
+}
+
+.moment-feedback::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 12px;
+  border: 6px solid transparent;
+  border-top: 0;
+  border-bottom-color: var(--bg-soft);
+}
+
+.moment-likes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 6px 10px;
+  line-height: 1.6;
+  color: var(--link);
+}
+
+.moment-likes > svg {
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+
+.moment-likes + .moment-comments {
+  border-top: 1px solid var(--divider);
+}
+
+.moment-comments {
+  margin: 0;
+  padding: 4px 10px 6px;
+  list-style: none;
+}
+
+.moment-comments li {
+  padding: 2px 0;
+  line-height: 1.6;
+  word-break: break-word;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .moment-comments li:hover {
+    background: var(--bg-hover);
+  }
+}
+
+.moment-comments .emoji-inline,
+.moment-text .emoji-inline {
+  width: 1.4em;
+  height: 1.4em;
+  vertical-align: -0.35em;
+}
+
+.name-link {
+  font-weight: 500;
+  color: var(--link);
+}
+
+.feed-end {
+  display: grid;
+  place-items: center;
+  min-height: 64px;
+  padding: 24px 0 calc(40px + env(safe-area-inset-bottom));
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.comment-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+  background: var(--bg-list);
+  animation: fade-up 0.15s ease-out;
+}
+
+.comment-bar .input {
+  flex: 1;
+  padding: 8px 10px;
+}
+
+/* post composer */
+.post-text {
+  width: 100%;
+  min-height: 110px;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.post-tools {
+  display: flex;
+  margin: 2px 0 10px -8px;
+}
+
+.post-tools .emoji-popover {
+  left: 0;
+  right: auto;
+  top: calc(100% + 6px);
+  bottom: auto;
+}
+
+.post-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.post-thumb,
+.post-add {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--bg);
+}
+
+.post-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-progress {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(0 0 0 / 45%);
+  font-size: 13px;
+  color: #fff;
+}
+
+.post-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 55%);
+  color: #fff;
+}
+
+.post-add {
+  display: grid;
+  place-items: center;
+  border: 1.5px dashed var(--border);
+  color: var(--text-3);
+}
+
+/* notifications */
+.notif-row {
+  display: flex;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--divider);
+}
+
+.notif-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-main p {
+  margin: 4px 0;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.notif-main time {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.notif-heart {
+  color: var(--link);
+}
+
+.notif-thumb {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  background: var(--bg);
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+.notif-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.notif-thumb span {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding: 4px;
+}
+
+@media (max-width: 767px) {
+  .moments-cover {
+    height: 280px;
+  }
+  .moment {
+    padding: 16px 14px;
+  }
+}
