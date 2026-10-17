@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 const KEY = 'weiliao.prefs';
-const DEFAULTS = { sound: true, desktop: false, enterToSend: true };
+const DEFAULTS = { sound: true, banner: true, desktop: false, enterToSend: true };
 
 function load() {
   try {

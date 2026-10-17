@@ -957,3 +957,131 @@ dialog.viewer::backdrop {
     padding-bottom: calc(14px + var(--safe-bottom));
   }
 }
+
+/* ---------- new-message banner ---------- */
+.banner-layer {
+  position: fixed;
+  inset: calc(8px + var(--safe-top)) 0 auto 0;
+  z-index: 1900;
+  margin: 0 auto;
+  width: min(420px, calc(100vw - 16px));
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.banner-layer:not(:popover-open):empty {
+  display: none;
+}
+
+.msg-banner {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 10px 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg-elevated) 88%, transparent);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 16%);
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+  touch-action: pan-x;
+  animation: banner-in 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.15);
+  transition: transform 0.18s, opacity 0.18s;
+}
+
+.msg-banner.leaving {
+  opacity: 0;
+  transform: translateY(-16px) scale(0.98);
+}
+
+@keyframes banner-in {
+  from {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.97);
+  }
+}
+
+.banner-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.banner-top {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.banner-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.banner-count {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--brand);
+}
+
+.banner-top time {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.banner-body {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.banner-body .emoji-inline {
+  width: 18px;
+  height: 18px;
+  vertical-align: -4px;
+}
+
+.banner-close {
+  flex-shrink: 0;
+  align-self: flex-start;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: var(--text-3);
+}
+
+@media (hover: hover) {
+  .banner-close:hover {
+    background: var(--bg-hover);
+    color: var(--text);
+  }
+}
+
+@supports not (background: color-mix(in srgb, red 50%, transparent)) {
+  .msg-banner {
+    background: var(--bg-elevated);
+  }
+}

@@ -15,7 +15,7 @@ import {
 } from '../../lib/actions.js';
 import { formatMessageTime, messagePreview } from '../../lib/format.js';
 import { useIsMobile, useNow } from '../../lib/hooks.js';
-import { openMenu, toast, toastError } from '../../lib/ui.js';
+import { closeBannersFor, openMenu, toast, toastError } from '../../lib/ui.js';
 import { PageHeader, Spinner } from '../../components/ui.jsx';
 import { ForwardPicker } from '../../components/Pickers.jsx';
 import { UserCard } from '../contacts/UserProfile.jsx';
@@ -131,6 +131,7 @@ function ChatView({ conversationId }) {
 
   useEffect(() => {
     setActiveConversation(conversationId);
+    closeBannersFor(conversationId);
     return () => setActiveConversation(null);
   }, [conversationId]);
 

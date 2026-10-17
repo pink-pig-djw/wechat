@@ -3,6 +3,7 @@ import { create } from 'zustand';
 /** Global, imperatively-opened UI: toasts, dialogs, context menus and the image viewer. */
 export const useUi = create(() => ({
   toasts: [],
+  banners: [],
   dialog: null,
   menu: null,
   viewer: null,
@@ -63,4 +64,31 @@ export function openViewer(images, index = 0) {
 
 export function closeViewer() {
   useUi.setState({ viewer: null });
+}
+
+/**
+ * In-app "new message" banner. One banner per conversation: a newer message replaces the
+ * previous one for that chat (with a running count). At most three are shown at once.
+ */
+export function showBanner({ conversationId, title, body, count = 1 }) {
+  useUi.setState((s) => {
+    const existing = s.banners.find((b) => b.conversationId === conversationId);
+    const banner = {
+      id: `${conversationId}-${Date.now()}`,
+      conversationId,
+      title,
+      body,
+      count: existing ? existing.count + count : count,
+      at: Date.now(),
+    };
+    return { banners: [banner, ...s.banners.filter((b) => b.conversationId !== conversationId)].slice(0, 3) };
+  });
+}
+
+export function closeBanner(id) {
+  useUi.setState((s) => ({ banners: s.banners.filter((b) => b.id !== id) }));
+}
+
+export function closeBannersFor(conversationId) {
+  useUi.setState((s) => ({ banners: s.banners.filter((b) => b.conversationId !== conversationId) }));
 }

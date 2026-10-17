@@ -7,7 +7,7 @@ import { toast } from './lib/ui.js';
 import { initNative } from './lib/native.js';
 import { useIsMobile } from './lib/hooks.js';
 import { AppShell } from './components/AppShell.jsx';
-import { DialogHost, ImageViewerHost, MenuHost, ToastHost } from './components/Overlays.jsx';
+import { BannerHost, DialogHost, ImageViewerHost, MenuHost, ToastHost } from './components/Overlays.jsx';
 import AuthPage from './pages/AuthPage.jsx';
 import { ChatsSection } from './pages/chats/ChatList.jsx';
 import { ChatWindow } from './pages/chats/ChatWindow.jsx';
@@ -69,6 +69,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/chats" replace />} />
         </Route>
       </Routes>
+      {token && <BannerHost />}
       <ToastHost />
       <MenuHost />
       <DialogHost />

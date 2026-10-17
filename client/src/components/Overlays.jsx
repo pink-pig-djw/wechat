@@ -1,6 +1,10 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Download, X } from 'lucide-react';
-import { closeMenu, closeViewer, useUi } from '../lib/ui.js';
+import { closeBanner, closeMenu, closeViewer, useUi } from '../lib/ui.js';
+import { useStore } from '../lib/store.js';
+import { EmojiText } from '../emoji/EmojiText.jsx';
+import { ConversationAvatar } from './Avatar.jsx';
 import { isTouch } from '../lib/hooks.js';
 import { Modal } from './Modal.jsx';
 import { isNative, openExternal } from '../lib/native.js';
@@ -278,5 +282,110 @@ function ImageViewer({ viewer }) {
         </>
       )}
     </dialog>
+  );
+}
+
+const BANNER_MS = 5000;
+
+/** New-message banners at the top of the screen (see showBanner in lib/ui.js). */
+export function BannerHost() {
+  const banners = useUi((s) => s.banners);
+  const ref = useRef(null);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!supportsPopover || !el) return;
+    if (banners.length) showOnTop(el);
+    else if (el.matches(':popover-open')) el.hidePopover();
+  }, [banners]);
+  return (
+    <div ref={ref} popover="manual" className="banner-layer" aria-live="polite">
+      {banners.map((b) => (
+        <MessageBanner key={b.id} banner={b} />
+      ))}
+    </div>
+  );
+}
+
+function MessageBanner({ banner }) {
+  const navigate = useNavigate();
+  const conversation = useStore((s) => s.conversations[banner.conversationId]);
+  const [leaving, setLeaving] = useState(false);
+  const [dragY, setDragY] = useState(0);
+  const timer = useRef(null);
+  const touchStart = useRef(null);
+
+  const close = useCallback(() => {
+    setLeaving(true);
+    setTimeout(() => closeBanner(banner.id), 180);
+  }, [banner.id]);
+
+  const schedule = useCallback(() => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(close, BANNER_MS);
+  }, [close]);
+  const pause = () => clearTimeout(timer.current);
+
+  useEffect(() => {
+    schedule();
+    return () => clearTimeout(timer.current);
+  }, [schedule]);
+
+  const open = () => {
+    closeBanner(banner.id);
+    navigate(`/chats/${banner.conversationId}`);
+  };
+
+  return (
+    <div
+      className={`msg-banner ${leaving ? 'leaving' : ''}`}
+      style={dragY ? { transform: `translateY(${dragY}px)`, opacity: 1 + dragY / 120 } : undefined}
+      role="button"
+      tabIndex={0}
+      aria-label={`${banner.title}：${banner.body}，点击查看`}
+      onClick={open}
+      onKeyDown={(e) => e.key === 'Enter' && open()}
+      // Reading with a mouse pauses the countdown; touch taps emulate mouse events, so ignore those.
+      onPointerEnter={(e) => e.pointerType === 'mouse' && pause()}
+      onPointerLeave={(e) => e.pointerType === 'mouse' && schedule()}
+      // Swipe up to dismiss on touch screens.
+      onTouchStart={(e) => {
+        pause();
+        touchStart.current = e.touches[0].clientY;
+      }}
+      onTouchMove={(e) => {
+        const dy = e.touches[0].clientY - touchStart.current;
+        setDragY(Math.min(0, dy));
+      }}
+      onTouchEnd={() => {
+        if (dragY < -40) close();
+        else {
+          setDragY(0);
+          schedule();
+        }
+      }}
+    >
+      <ConversationAvatar conversation={conversation} size={42} />
+      <div className="banner-main">
+        <div className="banner-top">
+          <b className="banner-title">{banner.title}</b>
+          {banner.count > 1 && <span className="banner-count">{banner.count} 条新消息</span>}
+          <time>刚刚</time>
+        </div>
+        <div className="banner-body">
+          <EmojiText text={banner.body} />
+        </div>
+      </div>
+      <button
+        type="button"
+        className="banner-close"
+        aria-label="关闭通知"
+        onClick={(e) => {
+          e.stopPropagation();
+          close();
+        }}
+      >
+        <X size={16} />
+      </button>
+    </div>
   );
 }

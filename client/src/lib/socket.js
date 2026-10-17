@@ -27,7 +27,8 @@ import {
 } from './actions.js';
 import { mentionsUser, messagePreview } from './format.js';
 import { playChime, showDesktopNotification } from './notify.js';
-import { toast } from './ui.js';
+import { showBanner, toast } from './ui.js';
+import { usePrefs } from './prefs.js';
 
 let socket = null;
 let navigate = () => {};
@@ -74,6 +75,13 @@ function notifyIncoming(message, conversation) {
   const sender = displayName(state, message.senderId, state.details[conversation.id], message.sender?.nickname);
   const body = conversation.type === 'group' ? `${sender}: ${messagePreview(message)}` : messagePreview(message);
   showDesktopNotification(conversation.name, body, () => navigate(`/chats/${conversation.id}`));
+  if (usePrefs.getState().banner && document.visibilityState === 'visible') {
+    showBanner({
+      conversationId: conversation.id,
+      title: conversation.name,
+      body: mentionsUser(message, state.me.id) ? `[有人@我] ${body}` : body,
+    });
+  }
 }
 
 export function connectSocket(token) {

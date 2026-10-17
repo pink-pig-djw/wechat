@@ -97,6 +97,7 @@ export default function Settings() {
         </CellGroup>
 
         <CellGroup title="新消息通知">
+          <Switch label="新消息弹窗" checked={prefs.banner} onChange={(v) => setPref('banner', v)} />
           <Switch label="提示音" checked={prefs.sound} onChange={(v) => setPref('sound', v)} />
           {canNotify() && <Switch label="桌面通知（页面在后台时）" checked={prefs.desktop} onChange={toggleDesktop} />}
         </CellGroup>
