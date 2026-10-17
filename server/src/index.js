@@ -16,6 +16,7 @@ import messageRoutes from './routes/messages.js';
 import groupRoutes from './routes/groups.js';
 import momentRoutes from './routes/moments.js';
 import uploadRoutes, { serveUploads } from './routes/upload.js';
+import { seed } from './seed.js';
 
 export function createServer(options = {}) {
   const config = resolveConfig(options);
@@ -31,6 +32,7 @@ export function createServer(options = {}) {
   app.use('/uploads', serveUploads(config.uploadDir));
 
   const api = express.Router();
+  api.get('/health', (_req, res) => res.json({ ok: true }));
   api.use('/auth', authRoutes(ctx));
   api.use(requireAuth(ctx));
   api.use('/users', userRoutes(ctx));
@@ -80,6 +82,8 @@ export function createServer(options = {}) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const server = createServer();
+  // On a fresh deployment, SEED_DEMO=1 creates the demo accounts so there is something to try.
+  if (process.env.SEED_DEMO === '1' && seed(server.db)) console.log('✅ 已创建演示数据（密码均为 123456）');
   const port = await server.listen();
   console.log(`🚀 微聊已启动: http://localhost:${port}`);
   if (!fs.existsSync(path.join(server.config.clientDist, 'index.html'))) {

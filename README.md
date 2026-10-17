@@ -63,6 +63,36 @@ npm start      # http://localhost:3000，同时提供接口和前端页面
 手机和电脑连同一个 Wi-Fi，用手机浏览器访问 `http://电脑的局域网IP:3000`（开发模式用 `5173` 端口）。
 「添加到主屏幕」在 iOS Safari 里可直接使用；安卓 Chrome 的安装提示需要 HTTPS（或 localhost），部署到服务器时请配上证书。
 
+## 部署到云平台（获得公网链接）
+
+仓库里已经带了 `Dockerfile` 和 Render 用的 `render.yaml`。部署要点只有两个：
+
+- 在 **`/data`** 挂一块持久化磁盘（Volume）。数据库、上传的图片和登录密钥都存在这里，不挂的话每次重新部署数据都会清空。
+- 可选：设置环境变量 `SEED_DEMO=1`。第一次启动时会创建演示账号（密码 `123456`），之后重启不会重复创建。
+
+### 方案 A：Railway
+
+1. 用 GitHub 登录 [railway.com](https://railway.com)，New Project → Deploy from GitHub repo → 选这个仓库和分支。它会自动识别 `Dockerfile`。
+2. 在服务上 **Add Volume**，挂载路径填 `/data`。
+3. Variables 里按需添加 `SEED_DEMO=1`。
+4. Settings → Networking → **Generate Domain**，得到 `https://xxx.up.railway.app`，这就是体验链接。
+
+### 方案 B：Render
+
+1. 用 GitHub 登录 [render.com](https://render.com)，New → **Blueprint** → 选这个仓库，会按 `render.yaml` 自动创建服务（含 `/data` 磁盘和健康检查）。
+2. 部署完成后会得到 `https://weiliao-xxxx.onrender.com`。
+
+> 平台的价格和免费额度经常调整，请以官网为准。Render 的持久化磁盘需要付费实例；免费实例没有磁盘，重新部署后数据会丢失。
+
+### 自己的服务器
+
+```bash
+docker build -t weiliao .
+docker run -d -p 3000:3000 -v weiliao-data:/data -e SEED_DEMO=1 --restart unless-stopped weiliao
+```
+
+前面用 Nginx 或 Caddy 配上 HTTPS，并转发 WebSocket（`/socket.io/`）。
+
 ## 配置
 
 | 环境变量 | 默认值 | 说明 |
@@ -71,6 +101,7 @@ npm start      # http://localhost:3000，同时提供接口和前端页面
 | `DATA_DIR` | `server/data` | SQLite 数据库所在目录 |
 | `UPLOAD_DIR` | `server/uploads` | 上传文件目录 |
 | `JWT_SECRET` | 自动生成并保存在 `DATA_DIR/.jwt-secret` | 登录令牌签名密钥 |
+| `SEED_DEMO` | 未设置 | 设为 `1` 时，空数据库启动会自动创建演示账号 |
 
 ## 技术栈与目录
 

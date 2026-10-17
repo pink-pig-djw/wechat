@@ -1,0 +1,15 @@
+# Render Blueprint: New → Blueprint → pick this repository.
+services:
+  - type: web
+    name: weiliao
+    runtime: docker
+    # Persistent disks need a paid instance type on Render; without a disk, data is lost on every redeploy.
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: SEED_DEMO
+        value: "1"
+    disk:
+      name: weiliao-data
+      mountPath: /data
+      sizeGB: 1
