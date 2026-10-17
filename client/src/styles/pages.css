@@ -375,7 +375,8 @@
 }
 
 .is-mobile .me-card {
-  padding: 36px 20px 32px;
+  /* No title bar on this tab, so the card itself clears the status bar / camera hole. */
+  padding: calc(36px + var(--safe-top)) 20px 32px;
 }
 
 .is-desktop .me-card {
