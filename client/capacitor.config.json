@@ -3,7 +3,7 @@
   "appName": "泡泡",
   "webDir": "dist",
   "server": {
-    "url": "https://weiliao-production.up.railway.app",
+    "url": "https://weiliao-production-6b54ea06.up.railway.app",
     "errorPath": "offline.html"
   },
   "android": {

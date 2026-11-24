@@ -46,7 +46,7 @@ jobs:
         if: env.SERVER_URL != ''
         run: |
           node -e "const fs=require('fs');const f='client/capacitor.config.json';const c=JSON.parse(fs.readFileSync(f));c.server.url=process.env.SERVER_URL;fs.writeFileSync(f,JSON.stringify(c,null,2))"
-          sed -i "s#https://weiliao-production.up.railway.app#${SERVER_URL}#" client/public/offline.html
+          sed -i "s#const SERVER_URL = '[^']*'#const SERVER_URL = '${SERVER_URL}'#" client/public/offline.html
 
       - name: Build web assets and sync the Android project
         working-directory: client
